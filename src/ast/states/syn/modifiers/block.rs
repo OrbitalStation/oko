@@ -1,14 +1,15 @@
+use std::fmt::Debug;
 use crate::*;
 
 #[derive(Debug, Clone, Visitable)]
 pub struct Block <T> (pub Vec <T>);
 
-impl <T: Parseable> Parseable for Block <T> {
+impl <T: Parseable + Debug + Clone + Visitable> Parseable for Block <T> {
     fn __parse(parser: &mut Parser) -> Result <Self, ParseError> {
         let global_offset = parser.offset.0;
         let nested_code = extract_nested_code(parser);
         let mut nested_parser = Parser::new(&nested_code);
-        let result = nested_parser.parse::<ParseRepeatedly <T, Seq <"">, 0>>()?;
+        let result = nested_parser.parse::<ParseRepeatedly <T, NoSep, True, 0>>()?;
         nested_parser.assert_is_empty(*result.last_error);
         let mut result = Self(result.vec);
         for (x, relative_offset) in result.0.iter_mut().zip(1..) {

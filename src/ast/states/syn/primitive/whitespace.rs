@@ -15,6 +15,7 @@ inj Parseable in Whitespace
 */
 impl Parseable for Whitespace {
     fn __parse(parser: &mut Parser) -> Result <Self, ParseError> {
+        #[derive(Debug, Clone, Visitable)]
         struct Single;
         impl Parseable for Single {
             fn __parse(parser: &mut Parser) -> Result <Self, ParseError> {
@@ -24,7 +25,7 @@ impl Parseable for Whitespace {
             fn add_to_span(&mut self, _: usize) {}
         }
 
-        parser.parse::<IgnoringParseRepeatedly <Single, 0>>().map(|_| Self)
+        parser.parse::<ParseRepeatedly <Single, NoSep, False, 0>>().map(|_| Self)
     }
 
     fn add_to_span(&mut self, _: usize) {}

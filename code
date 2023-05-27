@@ -1,5 +1,6 @@
 fun doSmth() -> unit
 	ty AAA
+
 	fun xxx() -> unit
 		ty FFF
 		fun zzz() -> AAA

@@ -5,6 +5,7 @@ pub struct Newline;
 
 impl Parseable for Newline {
     fn __parse(parser: &mut Parser) -> Result <Self, ParseError> {
+        #[derive(Debug, Clone, Visitable)]
         struct Single;
         impl Parseable for Single {
             fn __parse(parser: &mut Parser) -> Result <Self, ParseError> {
@@ -15,7 +16,7 @@ impl Parseable for Newline {
 
             fn add_to_span(&mut self, _: usize) {}
         }
-        parser.parse::<IgnoringParseRepeatedly <Single, 1>>()?;
+        parser.parse::<ParseRepeatedly <Single, NoSep, False, 1>>()?;
         Ok(Self)
     }
 

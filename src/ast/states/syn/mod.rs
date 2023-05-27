@@ -19,7 +19,7 @@ impl ASTState for SynASTState {
 
 	fn from_previous(ast: AST <Self::PreviousState>, _: &Self::DataToAdvance) -> Result <AST <Self>, ParseError> {
 		let mut parser = Parser::new(&ast.state.code);
-		let result = parser.parse::<Surrounded <ParseRepeatedly <_, Seq <"">, 0>, Optional <Newline>>>()?;
+		let result = parser.parse::<Surrounded <ParseRepeatedly <_, NoSep, True, 0>, Optional <Newline>>>()?;
 		parser.assert_is_empty(*result.value.last_error);
 		Ok(AST {
 			state: Self {
