@@ -13,7 +13,8 @@ pub(super) fn remove_comments(mut code: String) -> String {
 			if coff.starts_with("*") && [' ', '\t'].contains(&coff.chars().skip(1).next().unwrap_or(' ')) {
 				// Do not strip off the '\n' as it is needed to preserve span
 				let end = coff.find('\n').unwrap_or_else(|| code.len() - first_non_tab_or_space);
-				code.drain(first_non_tab_or_space..first_non_tab_or_space + end);
+				// Replace characters with ' ' instead of simply deleting to, again, preserve span
+				code.replace_range(first_non_tab_or_space..first_non_tab_or_space + end, &' '.to_string().repeat(end));
 			}
 
 			break

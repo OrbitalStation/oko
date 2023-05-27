@@ -1,8 +1,9 @@
 use oko::*;
 
-// TODO: Generalize enum and struct in derive_parseable
+// TODO: Decrease code duplication in functions process_enum and process_struct in oko_proc_macro::derive_visitable
 // TODO: Add `ParseDebug`
-// TODO: Make comments replace their content with ` ` to preserve span
+
+// TODO: check issue #81138 (something with ranges)
 
 // FIXME: Somehow newlines in blocks do not affect span
 
